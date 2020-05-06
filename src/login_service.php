@@ -40,7 +40,7 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
 				exit();
 			}
 			// If we get 1 result back, then the username/pw combo is valid
-			if($results->num_rows > 0) {
+			if($results->num_rows == 1) {
 				// Set session variables to remember this user
 				$_SESSION["username"] = $_POST["username"];
 				$_SESSION["logged_in"] = true;
@@ -58,10 +58,14 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
 			else {
 				echo "Username and/or Password are wrong";
 			}
+			$mysqli->close();
 		} 
+	}
+	else {
+		echo "Fields are missing";
 	}
 }
 else {
-	echo "You shouldn't be here D:<";
+	echo "You are already logged in D:<";
 }
 ?>

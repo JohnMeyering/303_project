@@ -54,7 +54,7 @@ input[type="text"]::placeholder {
 	background-color: #C1CFDA !important;
 }
 .error-message {
-	color: red !important;
+	color: #F71735 !important;
 }
 
 .cyan {
@@ -68,4 +68,7 @@ input[type="text"]::placeholder {
 }
 .blue {
 	color: #20A4F3;
+}
+.red {
+	color: #F71735;
 }

@@ -74,6 +74,7 @@ if( isset($_SESSION["logged_in"]) ) {
 					<font id="login-password-error" class="error-message"></font>
 					<input name="login-password" type="password" class="form-control form-margin">
 
+					<font id="login-error-message" class="error-message"></font>
 					<button id="login-submit" type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-sign-in-alt"></i> Sign In</button>
 				</form>
 			</div>
@@ -93,6 +94,7 @@ if( isset($_SESSION["logged_in"]) ) {
 					<font id="register-password-confirm-error" class="error-message"></font>
 					<input name="register-password-confirm" type="password" class="form-control form-margin">
 
+					<font id="register-error-message" class="error-message"></font>
 					<button id="register-submit" type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-user-plus"></i> Create Account</button>
 				</form>
 			</div>

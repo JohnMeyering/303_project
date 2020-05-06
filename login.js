@@ -4,10 +4,6 @@ $(document).ready(function() {
 	//  -register()
 	// Both handle the submission of their respective form
 
-	// There is also a helper function:
-	// -ajaxPost(endpointUrl, postData, returnFunction)
-	// It does what you think it does
-
 	$("#login-form-tag").on("submit", function(event) {
 		// Performs validation, then AJAX to src/login_service.php
 		// If the AJAX gets a "success", then we redirect to profile.php
@@ -56,6 +52,10 @@ $(document).ready(function() {
 				console.log(response);
 				if( response == "success" ) {
 					window.location.replace("profile.php");
+				}
+				else {
+					let error_message = $("#login-error-message");
+					error_message.text(response);
 				}
 			});
 		}
@@ -115,6 +115,10 @@ $(document).ready(function() {
 				console.log(response);
 				if( response == "success" ) {
 					window.location.replace("profile.php");
+				}
+				else {
+					let error_message = $("#register-error-message");
+					error_message.text(response);
 				}
 			});
 		}

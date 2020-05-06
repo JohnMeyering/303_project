@@ -65,6 +65,7 @@ $favorite_quip = $_SESSION['quip'];
 
 <!-- PROFILE CONTENT -->
 <link rel="stylesheet" href="profile.css">
+<script src="profile.js"></script>
 <div id="content">
 	<div class="container-fluid">
 		<!-- DISPLAY NAME -->
@@ -72,22 +73,26 @@ $favorite_quip = $_SESSION['quip'];
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="display-name-form">
 				<div class="text-white center-text">Your current display name is: <font><?php echo $display_name; ?></font></div>
 				<hr>
-
-				<label for="display-name-input" class="text-white center-text">Would you like a new one?<br>(Ex. Obama, Trump, Hitler, Mickey Mouse, etc.)</label>
-				<input name="display-name-input" type="text" class="form-control form-margin">
-				<button type="button" class="btn form-control form-margin btn-white"><i class="far fa-address-card"></i> Replace Display Name</button>
+				<form id="display-name-form-tag">
+					<label for="display-name-input" class="text-white center-text">Would you like a new one?<br>(Ex. Obama, Trump, Hitler, Mickey Mouse, etc.)</label>
+					<font id="display-name-error-message" class="error-message"></font>
+					<input name="display-name-input" type="text" class="form-control form-margin">
+					<button type="submit" id="display-name-submit" class="btn form-control form-margin btn-white"><i class="far fa-address-card"></i> Replace Display Name</button>
+				</form>
 			</div>
 		</div>
 		<!-- END OF DISPLAY NAME -->
 		<!-- COLOR PICKER -->
 		<div class="row justify-content-center">
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="display-color-form">
-				<div class="text-white center-text">Your current display color is: <font id="color-font" style="color: <?php echo $display_color; ?>;"></font><?php echo $display_color; ?></div>
+				<div class="text-white center-text">Your current display color is: <font id="color-font" style="color: <?php echo $display_color; ?> !important;"><?php echo $display_color; ?></font></div>
 				<hr>
-
-				<label for="display-color-input" class="text-white center-text">Would you like a new one?<br></label>
-				<input name="display-color-input" type="color" class="form-control form-margin" value="<?php echo $display_color; ?>">
-				<button type="button" class="btn form-control form-margin btn-white"><i class="fas fa-paint-brush"></i> Replace Display Color</button>
+				<form id="display-color-form-tag">
+					<label for="display-color-input" class="text-white center-text">Would you like a new one?<br></label>
+					<font id="display-color-error-message" class="error-message"></font>
+					<input name="display-color-input" type="color" class="form-control form-margin" value="<?php echo $display_color; ?>">
+					<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-paint-brush"></i> Replace Display Color</button>
+				</form>
 			</div>
 		</div>
 		<!-- END OF COLOR PICKER -->
@@ -108,9 +113,13 @@ $favorite_quip = $_SESSION['quip'];
 		<div class="row justify-content-center" >
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="delete-account-form">
 				<div class="text-white center-text">Would you like to delete your account? :thinking:</div>
+				<div class="text-white center-text">We won't ask you to confirm your decision</div>
 				<hr>
 
-				<button type="button" class="btn form-control form-margin btn-danger"><i class="fas fa-trash"></i> Delete Account</button>
+				<form id="delete-account-form-tag">
+					<font id="delete-user-error-message" class="error-message"></font>
+					<button type="submit" class="btn form-control form-margin btn-danger"><i class="fas fa-trash"></i> Delete Account</button>
+				</form>
 			</div>
 		</div>
 		<!-- END OF DELETE ACCOUNT -->

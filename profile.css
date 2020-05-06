@@ -36,3 +36,7 @@
 	background-color: #20A4F3;
 	border: solid 1px white;
 }
+form {
+	border: none;
+	margin: 0;
+}

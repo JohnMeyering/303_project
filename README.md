@@ -20,16 +20,8 @@ better cancel: Ctrl+z -> ps ux  => kill -9 PID
 
 TODO
 
-login.php
-2. register ajax (basically done, just need an if statement for when username is taken)
-4. register php
-
-profile.php
-7. display name ajax
-8. display color ajax
-9. display name php
-10. display color php
-11. delete account php (no ajax)
-12. JS validation (for the display name)
+join.php
+13. voting div
+14. response div
 
 After all of that is done, then I can do game stuff
