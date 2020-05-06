@@ -1,0 +1,71 @@
+html, body {
+	height: 100%;
+	margin: 0;
+    padding: 0;
+}
+body {
+	font-family: Helvetica, Arial, sans-serif;
+ 	background-color: #ffb34b !important; /* A more opaque orange for the bg */
+
+ 	display: flex;
+ 	flex-direction: column;
+}
+#navbar {
+	background-color: #20A4F3;
+}
+#logo1 {
+	font-family: 'Righteous', cursive;
+	font-size: 42px;
+}
+#logo2 {
+	font-family: 'Lobster', cursive;
+	font-size: 42px;
+}
+
+#content {
+	flex: 1 0 auto;
+}
+#footer {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	color: white;
+	background-color: #20A4F3;
+	text-align: center;
+
+	flex-shrink: 0;
+	margin-top: 40px;
+}
+
+input[type="text"]::placeholder {
+	text-align: center;
+}
+.center-text {
+	text-align: center;
+	width: 100%;
+}
+
+.btn-white {
+	margin-top: 1rem;
+	color: #20A4F3 !important;
+	background-color: white !important;
+}
+.btn-white:hover {
+	color: black !important;
+	background-color: #C1CFDA !important;
+}
+.error-message {
+	color: red !important;
+}
+
+.cyan {
+	color: #41EAD4;
+}
+.orange {
+	color: #FF9F1C;
+}
+.grey {
+	color: #C1CFDA;
+}
+.blue {
+	color: #20A4F3;
+}
