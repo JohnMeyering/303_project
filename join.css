@@ -1,4 +1,8 @@
 #join-form {
+	
+}
+
+.form {
 	margin-left: .3rem;
 	margin-right: .3rem;
 
@@ -10,6 +14,9 @@
 	border: solid 1px white;
 }
 
-#room-key-input {
-	text-transform: uppercase;
+/*#voting-container {
+	display: none;
 }
+#quip-container {
+	display: none;
+}*/

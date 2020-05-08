@@ -48,7 +48,7 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 					<a href="login.php" class='nav-link'><i class="fas fa-gamepad"></i> Login </a>
 				</li>
 				<li class='nav-item'>
-					<a href="team.html" class='nav-link text-white'><i class="fas fa-tv"></i> Host a Game!</a>
+					<a href="#" class='nav-link text-white'><i class="fas fa-tv"></i> Host a Game!</a>
 				</li>
 			</ul> <!-- End of navbar-nav -->
 		</div> <!-- End of navbar-collapse -->
@@ -56,25 +56,26 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 <!-- END OF NAVBAR -->
 
 
-
+<link rel="stylesheet" href="host.css">
+<script src="host.js"></script>
 <div id="content">
 	<!-- HOST INPUT -->
-	<link rel="stylesheet" href="host.css">
 	<div class="container-fluid">
 		<div class="row justify-content-center">
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="setup-form">
-				<form>
-					<label for="room-key-input" class="text-white align-middle">Make a Room Key!</label>
+				<form id="room-key-form-tag">
+					<label for="room-key-input" class="text-white align-middle center-text">Make a Room Key!</label>
 					<input name="room-key-input" id="room-key-input" type="text" class="form-control form-margin" maxlength="4" placeholder="ENTER ANY 4-LETTER CODE" autocomplete="off" autocorrect="off">
 
-					<button type="button" class="btn form-control form-margin btn-white"><i class="fas fa-broadcast-tower"></i> Create Room!</button>
+					<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-broadcast-tower"></i> Create Room!</button>
 				</form>
 			</div>
 		</div>
 	</div>
 	<!-- END OF HOST INPUT -->
 </div>
-
+<button type="button" onclick="sendQuipPrompt('John', 'Cena', 'Are You Sure About That');">Send Quip Prompt</button>
+<button type="button" onclick="sendVotingPrompt('John', 'Cena', 'Are You', 'Sure About That');">Send Voting Prompt</button>
 
 <!-- FOOTER -->
 <footer id="footer">

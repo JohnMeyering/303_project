@@ -7,6 +7,10 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]) {
 	header("Location: login.php");
 }
 
+$display_name = $_SESSION['display_name'];
+$display_color = $_SESSION['display_color'];
+$display_font = $_SESSION['display_font'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,23 +63,36 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]) {
 	</nav> <!-- End of navbar -->
 <!-- END OF NAVBAR -->
 
-<!-- JOIN INPUT -->
+<!-- INPUTS -->
+<script src="join.js"></script>
 <link rel="stylesheet" href="join.css">
 <div id="content">
+	<!-- JOIN -->
 	<div class="container-fluid">
 		<div class="row justify-content-center">
-			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="join-form">
-				<form>
+			<div class="col col-10 col-sm-8 col-md-6 col-lg-4 form" id="join-form">
+				<form id="join-form-tag">
 					<label for="room-key-input" class="text-white align-middle center-text">Join a Room!</label>
+					<font id="room-key-input-error-message" class="error-message"></font>
 					<input name="room-key-input" id="room-key-input" type="text" class="form-control form-margin" maxlength="4" placeholder="ENTER YOUR 4-LETTER CODE" autocomplete="off" autocorrect="off">
 
-					<button type="button" class="btn form-control form-margin btn-white"><i class="fas fa-user-plus"></i> Join!</button>
+					<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-user-plus"></i> Join!</button>
 				</form>
 			</div>
 		</div>
 	</div>
+	<!-- END OF JOIN -->
 </div>
-<!-- END OF JOIN INPUT -->
+<!-- END OF INPUTS -->
+
+
+<!-- User Data for easy JS access -->
+	<div style="display: none;">
+		<p id="display_name"><?php echo $display_name; ?></p>
+		<p id="display_color"><?php echo $display_color; ?></p>
+		<p id="display_font"><?php echo $display_font; ?></p>
+	</div>
+<!-- End of User Data -->
 
 <!-- FOOTER -->
 <footer id="footer">

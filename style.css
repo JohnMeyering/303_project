@@ -39,6 +39,15 @@ body {
 input[type="text"]::placeholder {
 	text-align: center;
 }
+input[type="text"] {
+	text-align: center;
+}
+textarea::placeholder {
+	text-align: center;
+}
+textarea {
+	text-align: center;
+}
 .center-text {
 	text-align: center;
 	width: 100%;

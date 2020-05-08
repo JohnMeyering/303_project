@@ -20,8 +20,9 @@ better cancel: Ctrl+z -> ps ux  => kill -9 PID
 
 TODO
 
-join.php
-13. voting div
-14. response div
+host.php
+15. game div
 
-After all of that is done, then I can do game stuff
+
+No need to re-do any of the websocket server code until everything is done
+It does what I need (not efficient, but effieciency is a stretch goal)

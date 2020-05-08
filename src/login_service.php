@@ -29,8 +29,8 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
 			SELECT * FROM users
 			JOIN colors
 			  ON colors.color_id = users.color_id
-			JOIN quips
-			  ON quips.quip_id = users.quip_id
+			JOIN fonts
+			  ON fonts.font_id = users.font_id
 			WHERE username = '" . $username . "' AND password = '" . $password . "';";
 			
 			$results = $mysqli->query($sql);
@@ -51,7 +51,7 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
 				// And move them into session variables
 				$_SESSION['display_name'] = $details['display_name'];
 				$_SESSION['display_color'] = $details['color'];
-				$_SESSION['quip'] = $details['quip'];
+				$_SESSION['display_font'] = $details['font'];
 
 				echo "success";
 			}

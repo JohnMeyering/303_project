@@ -9,7 +9,35 @@ if( !isset($_SESSION['logged_in']) || empty($_SESSION["logged_in"]) ) {
 
 $display_name = $_SESSION['display_name'];
 $display_color = $_SESSION['display_color'];
-$favorite_quip = $_SESSION['quip'];
+$display_font = $_SESSION['display_font'];
+
+//Query DB for fonts
+// Establish Connection
+$host = DB_HOST;
+$user = DB_USER;
+$pass = DB_PASS;
+$db = DB_NAME;
+
+$mysqli = new mysqli($host, $user, $pass, $db);
+
+if($mysqli->connecterrno) {
+	echo "MySQL Connection Error: " . $mysqli->connect_error;
+	exit();
+}
+
+// Query and Errors
+$mysqli->set_charset("utf8");
+
+$fontQuery = "SELECT * FROM fonts";
+
+$fonts = $mysqli->query($fontQuery);
+if(!$fonts) {
+	exit();
+}
+// Use Response (in HTML body)
+
+// Close Connection
+$mysqli->close();
 
 ?>
 <!DOCTYPE html>
@@ -96,19 +124,29 @@ $favorite_quip = $_SESSION['quip'];
 			</div>
 		</div>
 		<!-- END OF COLOR PICKER -->
-		<!-- FAVORITE QUIP -->
+		<!-- FAVORITE FONT -->
 		<div class="row justify-content-center">
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="delete-account-form">
-				<div class="text-white center-text">Your current favorite quip prompt is:</div>
+				<div class="text-white center-text">Your current display font is: <font style="font-family: <?php echo $display_font; ?>;"></font><?php echo $display_font; ?></div>
+				<?php if($display_font == "Comic Sans MS"): ?>
+					<div class="text-white center-text" style="font-size: 0.7em;">*The Superior font for superior individuals*</div>
+				<?php endif; ?>
 				<hr>
 
-				<p class="text-white center-text"><?php echo $favorite_quip; ?></p>
-				<hr>
-
-				<div class="text-white center-text" style="font-size: 12px;">*Hit the star button when in a game to select a new favorite quip prompt!*</div>
+				<form action="src/font_service.php" method="POST" id="display-font-form-tag">
+					<label for="display-font-input" class="text-white center-text">Would you like a new one?<br></label>
+					<font id="display-font-error-message" class="error-message"></font>
+					<select name="display-font-input" id="display-font-input" class="form-control">
+						<!-- Font dropdown options here -->
+						<?php while($font = $fonts->fetch_assoc() ) : ?>
+							<option value="<?php echo $font['font_id']; ?>" style="font-family: <?php echo $font['font']; ?>;"><?php echo $font['font']; ?></option>
+						<?php endwhile; ?>
+					</select>
+					<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-font"></i> Replace Display Font</button>
+				</form>
 			</div>
 		</div>
-		<!-- END OF FAVORITE QUIP -->
+		<!-- END OF FAVORITE FONT -->
 		<!-- DELETE ACCOUNT -->
 		<div class="row justify-content-center" >
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="delete-account-form">
