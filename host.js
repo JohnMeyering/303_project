@@ -1,13 +1,20 @@
+//all globals are declared here
+var gameStarted = false;
+
 //we will use these 2 variables in our when we send prompts
-let user1 = "";
-let user2 = "";
+var current_player1 = "";
+var current_player2 = "";
+
+//we will use this array for long-time reference
+var players = new Array();
 
 //This is global just to make dev easier. I know it's bad style
-let socket;
+var socket;
 
 //We will use these when we send prompts (global cause ez)
-let data;
-let query;
+var data;
+var query;
+var room_key;
 
 $(document).ready(function() {
 
@@ -17,6 +24,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		//Room is made implicitly
 		//We need to delete the form and render the game
+		room_key = $("#room-key-input").val();
 		mainContainer.html("");
 
 		socket = new WebSocket("ws://192.168.1.14:8080/");
@@ -29,6 +37,8 @@ $(document).ready(function() {
 		//When we first connect
 		socket.onopen = function(event) {
 			console.log("Connected");
+			gameStarted = true;
+			startGame();
 		}
 
 		//Every time we recieve a message
@@ -38,6 +48,28 @@ $(document).ready(function() {
 			let message = event.data;
 			message = JSON.parse(message);
 			console.log(message);
+
+			if(message.data.room_key == room_key) {
+				//handle new users
+				if(message.queryType == "join" && players.length < 4) {
+					console.log("Adding new player: " + message.data.display_name);
+					let display_name = message.data.display_name;
+					let display_color = message.data.display_color;
+					let display_font = message.data.display_font;
+					let new_player = new Player(display_name, display_color, display_font);
+					players.push(new_player);
+				} 
+				else if(gameStarted) {
+					//handle quips
+					if(message.queryType == "quip") {
+						console.log("Handling quip: " + message.data.quip)
+					}
+					//handle votes
+					else if(message.queryType == "vote") {
+						console.log("Handling vote: " + message.data.vote);
+					}
+				}				
+			}
 		}
 
 		//If we lose connection
@@ -54,6 +86,7 @@ $(document).ready(function() {
 
 function sendQuipPrompt(user1, user2, quip_prompt) {
 	data = {
+		room_key: room_key,
 		user1: user1,
 		user2: user2,
 		quip_prompt: quip_prompt
@@ -64,6 +97,7 @@ function sendQuipPrompt(user1, user2, quip_prompt) {
 }
 function sendVotingPrompt(user1, user2, quip1, quip2) {
 	data = {
+		room_key: room_key,
 		user1: user1,
 		user2: user2,
 		quip1: quip1,
@@ -75,6 +109,7 @@ function sendVotingPrompt(user1, user2, quip1, quip2) {
 }
 
 function sendMessage(message) {
+	console.log("Sending message: " + message);
 	socket.send(message);
 }
 

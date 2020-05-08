@@ -25,4 +25,50 @@ host.php
 
 
 No need to re-do any of the websocket server code until everything is done
-It does what I need (not efficient, but effieciency is a stretch goal)
+It does what I need (not efficient, but efficiency is a stretch goal)
+
+
+
+//Forget about everything below this, I'm just gonna impose a 4 player requirement
+Make a hard 4+ player restriction
+Make a hard even player count restriction
+
+
+//Players must be global because JS does pass by value and shuffling won't work
+let players_1 = array(of half of players)
+let players_2 = array(of half of players)
+let n be the number of players
+
+//there will be n-1 rounds
+for(let i=0; i < n-1; ++i) {
+	playRound();
+	shufflePlayers();
+}
+
+function shufflePlayers() {
+	//player 1 doesn't move
+	//all other players move clockwise
+	//i.e. move down the last player in players_1
+	//     and move up the first player in players_2
+
+	let temp = players_2.shift();
+	players_1.unshift(temp);
+
+	//then swap the first two players in players_1 and move the last player in players_1 down
+	temp = players_1[0];
+	players_1[0] = players_1[1];
+	players_1[1] = temp;
+
+	temp = players_1.pop();
+	players_2.push(temp);
+}
+
+function playRound() {
+	for i in range(0, len(players_1)):
+	 player_1 = players_1[i];
+	 players_2 = players_2[i];
+	 prepareQuipers(players_1[i], players_2[i]);
+	 displayQuips(); //uses global player_1 and player_2 objs, display prompt -> display quips
+	 vote(); //uses global player_1 and player_2 obj's, displays vote counter on each speach bubble
+	 reset_props(); //hides the prompt, speech bubbles/quips, highlighting images behind the players
+}

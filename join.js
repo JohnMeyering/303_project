@@ -43,6 +43,7 @@ $(document).ready(function() {
 			let display_color = $("#display_color").text();
 			let display_font = $("#display_font").text();
 			function sendMessage(message) {
+				console.log("Sending message: " + message);
 				socket.send(message);
 			}
 
@@ -86,7 +87,7 @@ $(document).ready(function() {
 				console.log(message);
 
 				//QUIP PROMPT
-				if(message.queryType == "quip_prompt") {
+				if(message.queryType == "quip_prompt" && message.data.room_key == room_key) {
 					if(message.data.user1 == display_name || message.data.user2 == display_name) {
 						//It's our turn to quip
 						console.log("My turn to quip");
@@ -137,7 +138,7 @@ $(document).ready(function() {
 					}
 				}
 				//VOTING
-				if(message.queryType == "voting_prompt") {
+				if(message.queryType == "voting_prompt" && message.data.room_key == room_key) {
 					if(message.data.user1 != display_name && message.data.user2 != display_name) {
 						//It's our turn to vote
 						console.log("My turn to vote");

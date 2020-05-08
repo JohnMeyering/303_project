@@ -57,6 +57,7 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 
 
 <link rel="stylesheet" href="host.css">
+<script src="game.js"></script>
 <script src="host.js"></script>
 <div id="content">
 	<!-- HOST INPUT -->
