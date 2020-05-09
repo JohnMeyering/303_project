@@ -87,117 +87,120 @@ $(document).ready(function() {
 				console.log(message);
 
 				//QUIP PROMPT
-				if(message.queryType == "quip_prompt" && message.data.room_key == room_key) {
-					if(message.data.user1 == display_name || message.data.user2 == display_name) {
-						//It's our turn to quip
-						console.log("My turn to quip");
+				if(message.data.room_key == room_key) {
+					if(message.queryType == "quip_prompt") {
+						if(message.data.user1 == display_name || message.data.user2 == display_name) {
+							//It's our turn to quip
+							console.log("My turn to quip");
 
-						//Clear the screen and fill it with the quip div
-						mainContainer.html("");
-						let quipHTML = `
-						<!-- QUIP -->
-						<div class="container-fluid" id="quip-container">
-							<div class="row justify-content-center">
-								<div class="col col-10 col-sm-8 col-md-6 col-lg-4 form" id="quip-form">
+							//Clear the screen and fill it with the quip div
+							mainContainer.html("");
+							let quipHTML = `
+							<!-- QUIP -->
+							<div class="container-fluid" id="quip-container">
+								<div class="row justify-content-center">
+									<div class="col col-10 col-sm-8 col-md-6 col-lg-4 form" id="quip-form">
 
-									<div class="text-white center-text">${ message.data.quip_prompt }</div>
-									<hr>
+										<div class="text-white center-text">${ message.data.quip_prompt }</div>
+										<hr>
 
-									<form id="quip-form-tag">
-										<label for="quip-input" class="text-white align-middle center-text">Enter your quip!</label>
-										<textarea name="quip-input" form="quip-form-tag" id="quip-input" class="form-control form-margin" maxlength="64" autocomplete="off" autocorrect="off" placeholder="Max 64 Characters"></textarea>
+										<form id="quip-form-tag">
+											<label for="quip-input" class="text-white align-middle center-text">Enter your quip!</label>
+											<textarea name="quip-input" form="quip-form-tag" id="quip-input" class="form-control form-margin" maxlength="64" autocomplete="off" autocorrect="off" placeholder="Max 64 Characters"></textarea>
 
-										<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-comment-alt"></i> Quip!</button>
-									</form>
+											<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-comment-alt"></i> Quip!</button>
+										</form>
 
+									</div>
 								</div>
 							</div>
-						</div>
-						<!-- END OF QUIP -->
-						`;
-						mainContainer.append(quipHTML);
+							<!-- END OF QUIP -->
+							`;
+							mainContainer.append(quipHTML);
 
-						//Setup the form handling for the quip-form-tag
-						$("#quip-form-tag").on("submit", function(event) {
-							event.preventDefault();
-							//All we need to do is a make a 'quip' Query, send it,
-							//and clear the screen
-							let quip = $("#quip-input").val();
+							//Setup the form handling for the quip-form-tag
+							$("#quip-form-tag").on("submit", function(event) {
+								event.preventDefault();
+								//All we need to do is a make a 'quip' Query, send it,
+								//and clear the screen
+								let quip = $("#quip-input").val();
 
-							data = {
-								room_key: room_key,
-								display_name: display_name,
-								quip: quip
-							};
-							query = new Query("quip", data);
-							query = JSON.stringify(query);
-							sendMessage(query);
+								data = {
+									room_key: room_key,
+									display_name: display_name,
+									quip: quip
+								};
+								query = new Query("quip", data);
+								query = JSON.stringify(query);
+								sendMessage(query);
 
-							mainContainer.html("");
-						});
+								mainContainer.html("");
+							});
+						}
 					}
-				}
-				//VOTING
-				if(message.queryType == "voting_prompt" && message.data.room_key == room_key) {
-					if(message.data.user1 != display_name && message.data.user2 != display_name) {
-						//It's our turn to vote
-						console.log("My turn to vote");
+					//VOTING
+					if(message.queryType == "voting_prompt") {
+						if(message.data.user1 != display_name && message.data.user2 != display_name) {
+							//It's our turn to vote
+							console.log("My turn to vote");
 
-						//clear the screen and fill it with the voting div
-						mainContainer.html("");
+							//clear the screen and fill it with the voting div
+							mainContainer.html("");
 
-						let votingHTML = `
-						<!-- VOTING -->
-						<div class="container-fluid" id="voting-container">
-							<div class="row justify-content-center">
-								<div class="col col-10 col-sm-8 col-md-6 col-lg-4 form" id="voting-form">
-									<form id=voting-form-tag>
-										<label for="voting-input" class="text-white align-middle center-text">Who was better?</label>
-										<div class="row justify-content-center">
-											<div class="col col-12 text-white">
-												<input name="voting-input" type="radio" id="quip1" value="${ message.data.user1 }">
-												<label for="quip1" class="text-white">${ message.data.user1 }</label>
-												<p>${ message.data.quip1 }</p>
-												<hr>
+							let votingHTML = `
+							<!-- VOTING -->
+							<div class="container-fluid" id="voting-container">
+								<div class="row justify-content-center">
+									<div class="col col-10 col-sm-8 col-md-6 col-lg-4 form" id="voting-form">
+										<form id=voting-form-tag>
+											<label for="voting-input" class="text-white align-middle center-text">Who was better?</label>
+											<div class="row justify-content-center">
+												<div class="col col-12 text-white">
+													<input name="voting-input" type="radio" id="quip1" value="${ message.data.user1 }">
+													<label for="quip1" class="text-white">${ message.data.user1 }</label>
+													<p>${ message.data.quip1 }</p>
+													<hr>
+												</div>
 											</div>
-										</div>
-										<div class="row justify-content-center">
-											<div class="col col-12 text-white">
-												<input name="voting-input" type="radio" id="quip2" value="${ message.data.user2 }">
-												<label for="quip2" class="text-white">${ message.data.user2 }</label>
-												<p>${ message.data.quip2 }</p>
+											<div class="row justify-content-center">
+												<div class="col col-12 text-white">
+													<input name="voting-input" type="radio" id="quip2" value="${ message.data.user2 }">
+													<label for="quip2" class="text-white">${ message.data.user2 }</label>
+													<p>${ message.data.quip2 }</p>
+												</div>
 											</div>
-										</div>
 
-										<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-vote-yea"></i> Vote!</button>
-									</form>
+											<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-vote-yea"></i> Vote!</button>
+										</form>
+									</div>
 								</div>
 							</div>
-						</div>
-						<!-- END OF VOTING -->
-						`;
+							<!-- END OF VOTING -->
+							`;
 
-						mainContainer.append(votingHTML);
+							mainContainer.append(votingHTML);
 
-						//setup the form handling for the voting-form-tag
-						$("#voting-form-tag").on("submit", function(event) {
-							event.preventDefault();
-							//All we need to do is make a 'quip' Query, send it,
-							//and clear the screen
-							let vote = $("input[name='voting-input']:checked").val();
-							console.log(vote);
-							data = {
-								room_key: room_key,
-								vote: vote
-							};
-							query = new Query("vote", data);
-							query = JSON.stringify(query);
-							sendMessage(query);
+							//setup the form handling for the voting-form-tag
+							$("#voting-form-tag").on("submit", function(event) {
+								event.preventDefault();
+								//All we need to do is make a 'quip' Query, send it,
+								//and clear the screen
+								let vote = $("input[name='voting-input']:checked").val();
+								console.log(vote);
+								data = {
+									room_key: room_key,
+									vote: vote
+								};
+								query = new Query("vote", data);
+								query = JSON.stringify(query);
+								sendMessage(query);
 
-							mainContainer.html("");
-						})
+								mainContainer.html("");
+							})
+						}
 					}
 				}
+				
 			}
 
 			//If we lose connection

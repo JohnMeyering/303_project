@@ -1,9 +1,40 @@
 //all globals are declared here
 var gameStarted = false;
+var state = "waiting for players";
+var promptQuipersDONE = false;
+var promptNotSent = true;
+var quipsNotSet = true;
+var promptViewersDONE = false;
+var votingDONE = false;
+var roundNumber = 1;     //3 rounds
+var matchupNumber = 1;   //2 matchups per round
+
+var staring_time; //Time in milliseconds since 1970/01/01 (multiply by 1000 for seconds) (use at start of phase)
+var current_time;
 
 //we will use these 2 variables in our when we send prompts
-var current_player1 = "";
-var current_player2 = "";
+var current_player1; //They are both Player objects
+var current_player2;
+var player_1_numVotes = 0;
+var player_2_numVotes = 0;
+
+var player_1_votes_obj;
+var player_2_votes_obj;
+
+var quip_1; //The Quip objs
+var quip_2;
+var quip_1_string = "Poop";
+var quip_2_string = "Poop";
+var current_quip_prompt_index = 0;
+var quip_prompts = new Array();
+var timer;
+
+var winnerNotDetermined = true;
+var winner;
+var winner_text;
+var is_the_winner;
+
+quips_recieved = 0;
 
 //we will use this array for long-time reference
 var players = new Array();
@@ -18,6 +49,8 @@ var room_key;
 
 $(document).ready(function() {
 
+	getQuipPrompts();
+
 	let mainContainer = $("#content");
 
 	$("#room-key-form-tag").on("submit", function(event) {
@@ -25,6 +58,14 @@ $(document).ready(function() {
 		//Room is made implicitly
 		//We need to delete the form and render the game
 		room_key = $("#room-key-input").val();
+		let error = $("#room-key-input-error-message");
+		//Validation
+		if(room_key.length != 4) {
+			error.text("The Key must be 4 characters!");
+			return;
+		}
+
+
 		mainContainer.html("");
 
 		socket = new WebSocket("ws://192.168.1.14:8080/");
@@ -56,17 +97,45 @@ $(document).ready(function() {
 					let display_name = message.data.display_name;
 					let display_color = message.data.display_color;
 					let display_font = message.data.display_font;
-					let new_player = new Player(display_name, display_color, display_font);
-					players.push(new_player);
+					let player_number = players.length;
+					let new_player = new Player(display_name, display_color, display_font, player_number);
+
+					//just in case of two players joining at basically the same time
+					//this makes it so they have to be even closer
+					if(!gameStarted) {
+						players.push(new_player);	
+					}
+
+					if(players.length == 4)  {
+						gameStarted = true;
+					}
 				} 
 				else if(gameStarted) {
 					//handle quips
 					if(message.queryType == "quip") {
-						console.log("Handling quip: " + message.data.quip)
+						if(state == "prompt quipers") {
+							console.log("Handling quip: " + message.data.quip)
+							if(quips_recieved < 2) {
+								if(message.data.display_name == current_player1.display_name) {
+									quip_1_string = message.data.quip;
+								}
+								else if(message.data.display_name == current_player2.display_name) {
+									quip_2_string = message.data.quip;
+								}
+							}
+						}	
 					}
 					//handle votes
 					else if(message.queryType == "vote") {
 						console.log("Handling vote: " + message.data.vote);
+						if(state == "voting" || state == "prompt viewers") {
+							if(message.data.vote == current_player1.name) {
+								++player_1_numVotes;
+							}
+							else if(message.data.vote == current_player2.name) {
+								++player_2_numVotes;
+							}
+						}
 					}
 				}				
 			}
@@ -121,10 +190,21 @@ class Query {
 		this.data = data;
 	}
 }
-class Player {
-	constructor(display_name, display_color, display_font) {
-		this.name = display_name;
-		this.color = display_color;
-		this.font = display_font;
-	}
+
+// https://javascript.info/task/shuffle
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+function getQuipPrompts() {
+	$.ajax({
+		method: "POST",
+		url: "src/quip_service.php"
+	}).done(function(response) {
+		response = JSON.parse(response);
+		for(let i=0; i < response.length; ++i) {
+			quip_prompts.push(response[i]);
+		}
+		shuffle(quip_prompts);
+	});
 }

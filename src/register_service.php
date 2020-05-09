@@ -62,7 +62,7 @@ if( !isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
 					$_SESSION["username"] = $_POST["username"];
 					$_SESSION["logged_in"] = true;
 					$_SESSION['display_name'] = $_POST["username"];
-					$_SESSION['display_color'] = "#FFFFFF";
+					$_SESSION['display_color'] = "#000000";
 					$_SESSION['display_font'] = "Arial";
 
 					echo "success";

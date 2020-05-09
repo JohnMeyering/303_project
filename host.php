@@ -57,6 +57,14 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 
 
 <link rel="stylesheet" href="host.css">
+<script src="Actor.js"></script>
+<script src="ImageNew.js"></script>
+<script src="Player.js"></script>
+<script src="StarBurst.js"></script>
+<script src="Font.js"></script>
+<script src="Quip.js"></script>
+<script src="QuipPrompt.js"></script>
+<script src="Timer.js"></script>
 <script src="game.js"></script>
 <script src="host.js"></script>
 <div id="content">
@@ -66,6 +74,7 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 			<div class="col col-10 col-sm-8 col-md-6 col-lg-4" id="setup-form">
 				<form id="room-key-form-tag">
 					<label for="room-key-input" class="text-white align-middle center-text">Make a Room Key!</label>
+					<font id="room-key-input-error-message" class="error-message"></font>
 					<input name="room-key-input" id="room-key-input" type="text" class="form-control form-margin" maxlength="4" placeholder="ENTER ANY 4-LETTER CODE" autocomplete="off" autocorrect="off">
 
 					<button type="submit" class="btn form-control form-margin btn-white"><i class="fas fa-broadcast-tower"></i> Create Room!</button>
@@ -75,8 +84,7 @@ if( isset($_SESSION["logged_in"]) || $_SESSION["logged_in"]) {
 	</div>
 	<!-- END OF HOST INPUT -->
 </div>
-<button type="button" onclick="sendQuipPrompt('John', 'Cena', 'Are You Sure About That');">Send Quip Prompt</button>
-<button type="button" onclick="sendVotingPrompt('John', 'Cena', 'Are You', 'Sure About That');">Send Voting Prompt</button>
+
 
 <!-- FOOTER -->
 <footer id="footer">

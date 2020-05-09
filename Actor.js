@@ -1,6 +1,6 @@
 class Actor {
 
-    constructor(width, height, color, x, y, type, flipCheck) {
+    constructor(width, height, x, y, type, flipCheck) {
         this.type = type;
         this.width = width;
         this.height = height;

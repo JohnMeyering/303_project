@@ -27,12 +27,41 @@ host.php
 No need to re-do any of the websocket server code until everything is done
 It does what I need (not efficient, but efficiency is a stretch goal)
 
+GFX
+Player:                   
+	card
+	starburst
+
+Props:                         
+	Quips
+	Quip prompts
+	Timer                      
+	Round counter (extra)
+
+states:
+"prompting quipers" => highlights 2 players and displays 30 second timer
+"displaying prompt" => displays prompt for 7 seconds
+"voting"            => display prompt, quips (includes votes), and 30 second timer
+"game over"         => displays players and PLAYER WINS
+
 
 
 //Forget about everything below this, I'm just gonna impose a 4 player requirement
 Make a hard 4+ player restriction
 Make a hard even player count restriction
 
+I'm just gonna hard code this
+Round 1
+Player 0 VS Player 1
+Player 2 VS Player 3
+
+Round 2
+Player 0 VS Player 2
+Player 1 VS Player 3
+
+Round 3
+Player 0 VS Player 3
+Player 1 VS Player 2
 
 //Players must be global because JS does pass by value and shuffling won't work
 let players_1 = array(of half of players)
@@ -65,10 +94,10 @@ function shufflePlayers() {
 
 function playRound() {
 	for i in range(0, len(players_1)):
-	 player_1 = players_1[i];
-	 players_2 = players_2[i];
-	 prepareQuipers(players_1[i], players_2[i]);
-	 displayQuips(); //uses global player_1 and player_2 objs, display prompt -> display quips
-	 vote(); //uses global player_1 and player_2 obj's, displays vote counter on each speach bubble
-	 reset_props(); //hides the prompt, speech bubbles/quips, highlighting images behind the players
+		player_1 = players_1[i];
+		players_2 = players_2[i];
+	    prepareQuipers(players_1[i], players_2[i]);
+	    displayQuips(); //uses global player_1 and player_2 objs, display prompt -> display quips
+ 	    vote(); //uses global player_1 and player_2 obj's, displays vote counter on each speach bubble
+	    reset_props(); //hides the prompt, speech bubbles/quips, highlighting images behind the players
 }
