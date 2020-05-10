@@ -99,12 +99,8 @@ $(document).ready(function() {
 					let display_font = message.data.display_font;
 					let player_number = players.length;
 					let new_player = new Player(display_name, display_color, display_font, player_number);
-
-					//just in case of two players joining at basically the same time
-					//this makes it so they have to be even closer
-					if(!gameStarted) {
-						players.push(new_player);	
-					}
+					players.push(new_player);
+					console.log("New Player " + new_player.name + " added to the list");
 
 					if(players.length == 4)  {
 						gameStarted = true;
@@ -115,12 +111,15 @@ $(document).ready(function() {
 					if(message.queryType == "quip") {
 						if(state == "prompt quipers") {
 							console.log("Handling quip: " + message.data.quip)
+
 							if(quips_recieved < 2) {
-								if(message.data.display_name == current_player1.display_name) {
+								if(message.data.display_name == current_player1.name) {
 									quip_1_string = message.data.quip;
+									++quips_recieved;
 								}
-								else if(message.data.display_name == current_player2.display_name) {
+								else if(message.data.display_name == current_player2.name) {
 									quip_2_string = message.data.quip;
+									++quips_recieved;
 								}
 							}
 						}	

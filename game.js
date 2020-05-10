@@ -126,7 +126,7 @@ function voting() {
         //Send voting prompt
         sendVotingPrompt(current_player1.name, current_player2.name, quip_1_string, quip_2_string); 
     }
-
+    
     displayQuipPrompt();
     displayQuips();
     displayVotes();
